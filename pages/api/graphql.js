@@ -1,30 +1,19 @@
 import { gql, ApolloServer } from "apollo-server-micro";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import accountTypeDefs from "../../graphql/account/typeDefs";
+import accountResolvers from "../../graphql/account/resolvers";
+import projectTypeDefs from "../../graphql/projects/typeDefs";
+import projectResolvers from "../../graphql/projects/resolvers";
 
-const typeDefs = gql`
-  type User {
-    id: ID
-  }
-
-  type Query {
-    getUser: User
-  }
-`;
-
-const resolvers = {
-  Query: {
-    getUser: () => {
-      return {
-        id: "Foo",
-      };
-    },
-  },
-};
+export const schema = makeExecutableSchema({
+  typeDefs: [accountTypeDefs, projectTypeDefs],
+  resolvers: [accountResolvers, projectResolvers],
+});
 
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-  playground: true,
+  schema,
+  playground: process.env.NODE_ENV,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 
