@@ -1,4 +1,5 @@
 import { clients } from "../sampleData";
+import Client from "../../models/Client";
 
 const accountResolvers = {
   User: {
@@ -8,8 +9,14 @@ const accountResolvers = {
     getUser: (_, args, context) => {
       return clients.find((client) => client.id == args.id);
     },
-    getUsers: () => {
-      return clients;
+    getUsers: async () => {
+      return await Client.find({});
+    },
+  },
+  Mutation: {
+    addUser: async (_, args, context) => {
+      const newUser = new Client(args.newUser);
+      return await newUser.save();
     },
   },
 };

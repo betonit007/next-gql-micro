@@ -14,6 +14,17 @@ const projectTypeDefs = gql`
     getProject(id: ID): Project
     getProjects: [Project]
   }
+
+  input newProjectInput {
+    clientId: String
+    name: String
+    description: String
+    status: String
+  }
+
+  type Mutation {
+    addProject(project: newProjectInput): Project
+  }
 `;
 
 export default projectTypeDefs;

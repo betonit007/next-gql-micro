@@ -13,6 +13,16 @@ const accountTypeDefs = gql`
     getUser(id: ID): User
     getUsers: [User]
   }
+
+  input userInput {
+    name: String
+    email: String
+    phone: String
+  }
+
+  type Mutation {
+    addUser(newUser: userInput): User
+  }
 `;
 
 export default accountTypeDefs;

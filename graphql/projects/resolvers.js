@@ -1,4 +1,5 @@
 import { projects, clients } from "../sampleData";
+import Project from "../../models/Project";
 
 const projectResolvers = {
   Project: {
@@ -10,8 +11,16 @@ const projectResolvers = {
     getProject: (parent, args, context) => {
       return projects.find((project) => project.id === args.id);
     },
-    getProjects: () => {
+    getProjects: async () => {
+      console.log(await Project.find());
       return projects;
+    },
+  },
+  Mutation: {
+    addProject: (parent, args, context) => {
+      console.log("yes!");
+      const newProject = new Project(args.project);
+      return newProject.save();
     },
   },
 };
