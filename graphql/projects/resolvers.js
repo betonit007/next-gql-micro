@@ -1,9 +1,14 @@
-import { projects } from "../sampleData";
+import { projects, clients } from "../sampleData";
 
 const projectResolvers = {
+  Project: {
+    client: (parent) => {
+      return clients.find((client) => client.id === parent.id);
+    },
+  },
   Query: {
-    getProject: (id) => {
-      return projects.filter((project) => project.id === id);
+    getProject: (parent, args, context) => {
+      return projects.find((project) => project.id === args.id);
     },
     getProjects: () => {
       return projects;

@@ -7,10 +7,11 @@ const projectTypeDefs = gql`
     name: String
     description: String
     status: String
+    client: User
   }
 
   type Query {
-    getProject(id: ID): User
+    getProject(id: ID): Project
     getProjects: [Project]
   }
 `;
