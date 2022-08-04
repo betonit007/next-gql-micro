@@ -1,10 +1,11 @@
 import { projects, clients } from "../sampleData";
 import Project from "../../models/Project";
+import Client from "../../models/Client";
 
 const projectResolvers = {
   Project: {
-    client: (parent) => {
-      return clients.find((client) => client.id === parent.id);
+    client: async (parent) => {
+      return await Client.findById(parent.clientId);
     },
   },
   Query: {
@@ -12,13 +13,11 @@ const projectResolvers = {
       return projects.find((project) => project.id === args.id);
     },
     getProjects: async () => {
-      console.log(await Project.find());
-      return projects;
+      return await Project.find();
     },
   },
   Mutation: {
     addProject: (parent, args, context) => {
-      console.log("yes!");
       const newProject = new Project(args.project);
       return newProject.save();
     },

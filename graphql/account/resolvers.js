@@ -6,8 +6,8 @@ const accountResolvers = {
     test: () => "subResolver string",
   },
   Query: {
-    getUser: (_, args, context) => {
-      return clients.find((client) => client.id == args.id);
+    getUser: async (_, args, context) => {
+      return Client.findById(args.id);
     },
     getUsers: async () => {
       return await Client.find({});
@@ -17,6 +17,9 @@ const accountResolvers = {
     addUser: async (_, args, context) => {
       const newUser = new Client(args.newUser);
       return await newUser.save();
+    },
+    removeUser: async (_, args, context) => {
+      return await Client.findByIdAndRemove(args.id);
     },
   },
 };

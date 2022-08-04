@@ -22,6 +22,7 @@ const accountTypeDefs = gql`
 
   type Mutation {
     addUser(newUser: userInput): User
+    removeUser(id: ID): User
   }
 `;
 
